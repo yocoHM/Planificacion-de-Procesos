@@ -4,7 +4,7 @@
  * Clase que maneja las lecturas y escrituras de archivos.
  *
  * Autor: Moises Alencastre Miranda
- * Version: 1.0
+ * Version: 1.0 
  */
 #include "ManejoArchivo.h"
 
