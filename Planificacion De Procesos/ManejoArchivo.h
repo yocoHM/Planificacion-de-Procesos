@@ -21,9 +21,9 @@ using namespace std;
 
 class ManejoArchivo {
 public:
-
+  
   vector<Proceso*> leer(string archivo);
-
+  
 };
 
 #endif

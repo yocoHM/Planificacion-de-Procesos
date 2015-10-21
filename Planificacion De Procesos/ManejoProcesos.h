@@ -19,7 +19,7 @@
 class ManejoProcesos {
 private:
   void ordenarProcesos(std::vector<Proceso*> &procesosPendientes, int tam);
-
+  
 public:
   void borrarProcesos(std::vector<Proceso*> procesos);
   void imprimirTiemposEsperaInd(std::vector<Proceso*> procesos);
@@ -27,8 +27,8 @@ public:
   void shortestJobFirst(std::vector<Proceso*> procesos);
   void roundRobin(std::vector<Proceso*> procesos);
   bool compDouble(double a, double b);
-   
-
+  
+  
 };
 
 #endif /* ManejoProcesos_h */
