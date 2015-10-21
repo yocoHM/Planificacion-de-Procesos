@@ -74,66 +74,80 @@ void ManejoProcesos::shortestJobFirst(std::vector<Proceso*> procesos)
   int completados = int(procesos.size());
   int pos = 0;
   float tiempo = 0;
+  std::string gantt = "";
+  
   Proceso * procesoActual = procesos[pos];
+  gantt += "Tiempo inicia: " + std::to_string(tiempo) + "|" + procesoActual->getProcesoID() + "|";
+  
   std::vector<Proceso*> procesosPendientes;
   
   while (completados != 0) {
     
-    std::cout << "Tiempo: " << tiempo << std::endl;
-    
     if (pos == procesos.size() && !procesosPendientes.empty() && procesoActual->getTerminado() == true) {
+      
       if (completados + 1 == procesosPendientes.size()) {
         procesosPendientes.erase(procesosPendientes.begin());
       }
+      
+      gantt += "Tiempo termina: " + std::to_string(tiempo) + "|";
       procesoActual = procesosPendientes[0];
+      gantt += "Tiempo inicia: " + std::to_string(tiempo) + "|" + procesoActual->getProcesoID() + "|";
+      
       //***
       procesosPendientes.erase(procesosPendientes.begin());
     }
     else if (pos < procesos.size() && procesoActual->getTerminado() == true && tiempo < procesos[pos+1]->getTiempoLlegada()) {
       
+      gantt += "Tiempo termina: " + std::to_string(tiempo) + "|";
       //cambiar el procesoActual
       procesoActual = procesosPendientes[0];
+      gantt += "Tiempo inicia: " + std::to_string(tiempo) + "|" + procesoActual->getProcesoID() + "|";
       
-      //***
       procesosPendientes.erase(procesosPendientes.begin());
       
-      //informacion en consola
-      std::cout << "Proceso actual: " << procesoActual->getProcesoID() << ", tiempo proceso: " << procesoActual->getTiempoProceso() << std::endl;
+      //cout para debbugging
+      //std::cout << "Proceso actual: " << procesoActual->getProcesoID() << ", tiempo proceso: " << procesoActual->getTiempoProceso() << std::endl;
       
     }
     else if (pos < procesos.size() && procesoActual->getTerminado() == true && tiempo == procesos[pos+1]->getTiempoLlegada()) {
       
+      gantt += "Tiempo termina: " + std::to_string(tiempo) + "|";
       //cambiar el procesoActual
       procesoActual = procesos[pos+1];
+      gantt += "Tiempo inicia: " + std::to_string(tiempo) + "|" + procesoActual->getProcesoID() + "|";
       
-      //informacion en consola
-      std::cout << "Proceso actual: " << procesoActual->getProcesoID() << ", tiempo proceso: " << procesoActual->getTiempoProceso() << std::endl;
+      //cout para debbugging
+      //std::cout << "Proceso actual: " << procesoActual->getProcesoID() << ", tiempo proceso: " << procesoActual->getTiempoProceso() << std::endl;
       
       //incrementar la posicion
       pos++;
       
     }
     else if (pos < procesos.size() && tiempo == procesos[pos+1]->getTiempoLlegada() && procesos[pos+1]->getTiempoProceso() < procesoActual->getTiempoProceso()) {
+      
       //mandar el proceso actual a la cola
       procesosPendientes.push_back(procesoActual);
       
       //ordenar ascendentemente los procesos en la cola por su tiempo de procesamiento
       ordenarProcesos(procesosPendientes, int(procesosPendientes.size()));
       
-      std::cout << "- - -Procesos pendientes- - -" << std::endl;
+//      //cout para debbugging
+//      std::cout << "- - -Procesos pendientes- - -" << std::endl;
+//      
+//      for (int i = 0; i < procesosPendientes.size(); i++) {
+//        std::cout << procesosPendientes[i]->getProcesoID() << ", ";
+//      }
+//      
+//      std::cout << std::endl;
+//      std::cout << "- - - - - - - - - - - - - - -" << std::endl;
       
-      for (int i = 0; i < procesosPendientes.size(); i++) {
-        std::cout << procesosPendientes[i]->getProcesoID() << ", ";
-      }
-      
-      std::cout << std::endl;
-      std::cout << "- - - - - - - - - - - - - - -" << std::endl;
-      
+      gantt += "Tiempo termina: " + std::to_string(tiempo) + "|";
       //cambiar el procesoActual
       procesoActual = procesos[pos+1];
+      gantt += "Tiempo inicia: " + std::to_string(tiempo) + "|" + procesoActual->getProcesoID() + "|";
       
-      //informacion en consola
-      std::cout << "Proceso actual: " << procesoActual->getProcesoID() << ", tiempo proceso: " << procesoActual->getTiempoProceso() << std::endl;
+      //cout para debbugging
+      //std::cout << "Proceso actual: " << procesoActual->getProcesoID() << ", tiempo proceso: " << procesoActual->getTiempoProceso() << std::endl;
       
       //incrementar la posicion
       pos++;
@@ -145,14 +159,15 @@ void ManejoProcesos::shortestJobFirst(std::vector<Proceso*> procesos)
       //ordenar ascendentemente los procesos en la cola por su tiempo de procesamiento
       ordenarProcesos(procesosPendientes, int(procesosPendientes.size()));
       
-      std::cout << "- - -Procesos pendientes- - -" << std::endl;
-      
-      for (int i = 0; i < procesosPendientes.size(); i++) {
-        std::cout << procesosPendientes[i]->getProcesoID() << ", ";
-      }
-      
-      std::cout << std::endl;
-      std::cout << "- - - - - - - - - - - - - - -" << std::endl;
+//      //cout para debbugging
+//      std::cout << "- - -Procesos pendientes- - -" << std::endl;
+//      
+//      for (int i = 0; i < procesosPendientes.size(); i++) {
+//        std::cout << procesosPendientes[i]->getProcesoID() << ", ";
+//      }
+//      
+//      std::cout << std::endl;
+//      std::cout << "- - - - - - - - - - - - - - -" << std::endl;
       
       pos++;
       
@@ -164,14 +179,15 @@ void ManejoProcesos::shortestJobFirst(std::vector<Proceso*> procesos)
       //ordenar ascendentemente los procesos en la cola por su tiempo de procesamiento
       ordenarProcesos(procesosPendientes, int(procesosPendientes.size()));
       
-      std::cout << "- - -Procesos pendientes- - -" << std::endl;
-      
-      for (int i = 0; i < procesosPendientes.size(); i++) {
-        std::cout << procesosPendientes[i]->getProcesoID() << ", ";
-      }
-      
-      std::cout << std::endl;
-      std::cout << "- - - - - - - - - - - - - - -" << std::endl;
+//      //cout para debbugging
+//      std::cout << "- - -Procesos pendientes- - -" << std::endl;
+//      
+//      for (int i = 0; i < procesosPendientes.size(); i++) {
+//        std::cout << procesosPendientes[i]->getProcesoID() << ", ";
+//      }
+//      
+//      std::cout << std::endl;
+//      std::cout << "- - - - - - - - - - - - - - -" << std::endl;
       
       pos++;
       
@@ -185,18 +201,21 @@ void ManejoProcesos::shortestJobFirst(std::vector<Proceso*> procesos)
       }
     }
     
-    std::cout << "Tiempo: " << tiempo << std::endl;
-    
     //actualizar tiempo de procesamiento para el proceso actual
     procesoActual->setTiempoProceso(procesoActual->getTiempoProceso() - incremento);
     
-    //informacion en consola
-    std::cout << "Proceso actual: " << procesoActual->getProcesoID() << ", tiempo proceso: " << procesoActual->getTiempoProceso() << std::endl;
+    //cout para debbugging
+    //std::cout << "Proceso actual: " << procesoActual->getProcesoID() << ", tiempo proceso: " << procesoActual->getTiempoProceso() << std::endl;
     
     if (procesoActual->getTiempoProceso() == 0) {
       procesoActual->setTerminado(true);
       completados--;
-      std::cout << "***Se terminó el proceso: " << procesoActual->getProcesoID() << ". Falta(n) por completarse " << completados << " proceso(s)***" << std::endl;
+      
+      if (completados == 0) {
+        gantt += "Tiempo termina: " + std::to_string(tiempo) + "|";
+      }
+      //cout para debbugging
+      //std::cout << "***Se terminó el proceso: " << procesoActual->getProcesoID() << ". Falta(n) por completarse " << completados << " proceso(s)***" << std::endl;
     }
     
     //movimiento de lugar de esta condicion fue la corrección del bug :')
@@ -205,6 +224,9 @@ void ManejoProcesos::shortestJobFirst(std::vector<Proceso*> procesos)
     }
     
   }//cierre del while
+  
+  std::cout << "---------Gráfica de Gantt----------" << std::endl;
+  std::cout << gantt << std::endl;
   
 }//cierre de shortestJobFirst
 
@@ -236,7 +258,7 @@ void ManejoProcesos::roundRobin(std::vector<Proceso*> procesos)
   float quantum = 0;
   
   std::ifstream c;
-  c.open("/Users/Yoco/Desktop/procesos.txt");
+  c.open("procesos.txt");
   c >> quantum;
   c.close();
   
@@ -279,7 +301,9 @@ void ManejoProcesos::roundRobin(std::vector<Proceso*> procesos)
   while (cantidadProcesos != terminados)
   {
     //Se inicia el primer proceso
-    std::cout << "Se está ejecutando el proceso: " << colaProcesos.front()->getProcesoID() << std::endl;
+    
+    //cout para debbugging
+    //std::cout << "Se está ejecutando el proceso: " << colaProcesos.front()->getProcesoID() << std::endl;
     
     //Checa si el proceso se termina en el tiempo del cuantum
     if (colaProcesos.front()->getTiempoProceso() < quantum) //Si si se termina asigna el tiempo que se tarda al tiempo de ejecución
@@ -314,8 +338,10 @@ void ManejoProcesos::roundRobin(std::vector<Proceso*> procesos)
     //Si el proceso se terminó lo termina y lo saca de la cola
     if (colaProcesos.front()->getTiempoProceso() <= 0)
     {
-      std::cout << "Se terminó de ejecutar el proceso: " << colaProcesos.front()->getProcesoID() << std::endl;
-      std::cout << "El tiempo de espera de este proceso fue de: " << colaProcesos.front()->getTiempoEspera() << std::endl;
+      //cout para debbugging
+      //std::cout << "Se terminó de ejecutar el proceso: " << colaProcesos.front()->getProcesoID() << std::endl;
+      //std::cout << "El tiempo de espera de este proceso fue de: " << colaProcesos.front()->getTiempoEspera() << std::endl;
+      
       colaProcesos.front()->setTerminado(true);
       colaProcesos.erase(colaProcesos.begin());
       terminados++;
@@ -339,10 +365,10 @@ void ManejoProcesos::roundRobin(std::vector<Proceso*> procesos)
     //resetea el tiempo de ejecución
     tiempoEjecucion = 0.0;
   }
-  std::cout << "---------Gráfica en el tiempo ----------" << std::endl;
+  std::cout << "---------Gráfica de Gantt----------" << std::endl;
   std::cout << grafica <<std::endl;
-  std::cout << "---------Tiempos de espera ----------" << std::endl;
+  std::cout << "\n---------Tiempos de espera individuales----------" << std::endl;
   imprimirTiemposEsperaInd(procesos);
-  std::cout << "---------Tiempo promedio ----------" << std::endl;
+  std::cout << "\n---------Tiempo promedio de espera total----------" << std::endl;
   imprimirTiempoPromedio(procesos);
 }

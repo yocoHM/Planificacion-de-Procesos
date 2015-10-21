@@ -39,6 +39,7 @@ void desplegarMenu(ManejoArchivo file) {
   
   while (op != 3) {
     //menú impreso en consola
+    cout << "Seleccione el método de planificación de procesos que desee" << endl;
     cout << "1. Shortest Job First" << endl;
     cout << "2. Round Robin" << endl;
     cout << "3. Salir" << endl;
@@ -49,11 +50,11 @@ void desplegarMenu(ManejoArchivo file) {
       case 1:
         cout << "\n- - - - -SJF Apropiativo- - - - -" << endl;
         //se lee el archivo .txt con los procesos para SJF Apropiativo y se guardan los procesos leídos en el vector procesos
-        procesos = file.leer("/Users/Yoco/Desktop/procesos.txt");
+        procesos = file.leer("procesos.txt");
         admProcesos.shortestJobFirst(procesos);
-        cout << "\n- - - - -Tiempos de espera individuales- - - - -" << endl;
+        std::cout << "\n---------Tiempos de espera individuales----------" << std::endl;
         admProcesos.imprimirTiemposEsperaInd(procesos);
-        cout << "\n- - - - -Tiempo promedio de espera total- - - - -" << endl;
+        std::cout << "\n---------Tiempo promedio de espera total----------" << std::endl;
         admProcesos.imprimirTiempoPromedio(procesos);
         cout << endl;
         break;
@@ -62,7 +63,7 @@ void desplegarMenu(ManejoArchivo file) {
       case 2:
         cout << "\n- - - - -Round Robin- - - - -" << endl;
         //se lee el archivo .txt con los procesos para Round Robin y se guardan los procesos leídos en el vector procesos
-        procesos = file.leer("/Users/Yoco/Desktop/procesos.txt");
+        procesos = file.leer("procesos.txt");
         admProcesos.roundRobin(procesos);
         cout << endl;
         break;
