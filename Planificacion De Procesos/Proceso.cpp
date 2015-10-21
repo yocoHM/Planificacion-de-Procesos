@@ -24,7 +24,7 @@ Proceso::Proceso(std::string _id, float _tiempoLlegada, float _tiempoProceso, bo
  - tiempoProceso
  - terminado
  - tiempoEspera
-*/
+ */
 
 std::string Proceso::getProcesoID()
 {
@@ -56,7 +56,7 @@ float Proceso::getTiempoEspera()
  - tiempoProceso
  - terminado
  - tiempoEspera
-*/
+ */
 void Proceso::setTiempoProceso(float tiempo)
 {
   tiempoProceso = tiempo;
